@@ -284,7 +284,7 @@ dd.seq() {
         echo -e "  \033[38;5;196m✗ $(_t not_ddev_project)"
         return 1
     fi
-    
+
     echo -e "\n  \033[38;5;33m🗄️ $(_t ddev_sequelace)\033[0m\n"
     ddev sequelace
 }
