@@ -118,7 +118,7 @@ lang_set() {
     echo -e "  \033[38;5;46m✓\033[0m Language changed to ${TERMINUP_LANGUAGES[$new_lang]}"
     echo -e "  \033[38;5;245mReloading shell...\033[0m"
     sleep 0.3
-    
+
     # Reload shell automatically
     exec zsh
 }

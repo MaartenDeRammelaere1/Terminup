@@ -47,7 +47,7 @@ TERMINUP_COMPONENTS_CONFIG="$TERMINUP_CONFIG_DIR/components"
 _terminup_lazy_load() {
     local component="$1"
     local trigger_functions=("${@:2}")
-    
+
     for func in "${trigger_functions[@]}"; do
         eval "
         $func() {
@@ -66,7 +66,7 @@ _terminup_lazy_load() {
 
 _terminup_load_component() {
     local component="$1"
-    
+
     case "$component" in
         git)
             _terminup_lazy_load "git-magic" gc gp gl ga gco gss gb gst gstp gm fga
@@ -134,7 +134,7 @@ TERMINUP_MODE_COMPONENTS=(
 _terminup_init_mode() {
     local mode="$1"
     local components=""
-    
+
     if [[ "$mode" == "custom" ]]; then
         # Custom mode: use user-defined components
         components="${TERMINUP_CUSTOM_COMPONENTS:-git nav npm}"
@@ -142,7 +142,7 @@ _terminup_init_mode() {
         # Preset mode
         components="${TERMINUP_MODE_COMPONENTS[$mode]}"
     fi
-    
+
     # Load each enabled component (lazy)
     for component in ${=components}; do
         _terminup_load_component "$component"
@@ -162,7 +162,7 @@ fi
 # ─────────────────────────────────────────────────────────────────
 terminup_mode() {
     local cmd="${1:-status}"
-    
+
     case "$cmd" in
         status)
             echo ""
@@ -459,6 +459,7 @@ terminup() {
             echo -e "    \033[38;5;208mdev\033[0m/\033[38;5;208mbuild\033[0m   Dev server/Build"
             echo -e "    \033[38;5;177mff\033[0m          Fuzzy file finder"
             echo -e "    \033[38;5;87mlock\033[0m        Lock screen"
+            echo -e "    \033[38;5;39mdd\033[0m          DDEV commands"
             echo -e "    \033[38;5;141mstats\033[0m       System stats"
             echo ""
             echo -e "  \033[38;5;245m─────────────────────────────────────────────\033[0m"
@@ -555,7 +556,7 @@ terminup() {
             ;;
         *)
             echo -e "  \033[38;5;196m✗\033[0m Unknown: $cmd"
-            echo -e "  \033[38;5;245mTry: tup [git|nav|npm|extras|tools|workflow|fun|screen|mode|install|all]\033[0m"
+            echo -e "  \033[38;5;245mTry: tup [git|nav|npm|ddev|extras|tools|workflow|fun|screen|mode|install|all]\033[0m"
             ;;
     esac
 }
