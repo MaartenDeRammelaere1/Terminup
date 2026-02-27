@@ -47,6 +47,7 @@ source "$_I18N_DIR/languages/it.zsh"
 # ─────────────────────────────────────────────────────────────────
 
 # Get translated string
+
 # Usage: _t "key" or _t "key" "fallback"
 _t() {
     local key="$1"
