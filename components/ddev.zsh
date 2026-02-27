@@ -21,17 +21,17 @@ ddev_status() {
         local status=$(ddev describe -j 2>/dev/null | grep -o '"status":"[^"]*"' | head -1 | cut -d'"' -f4)
         case "$status" in
             running)
-                echo -e "\033[38;5;46m●\033[0m DDEV running"
+                echo -e "\033[38;5;46m●\033[0m $(t ddev_running)"
                 ;;
             stopped)
-                echo -e "\033[38;5;196m●\033[0m DDEV stopped"
+                echo -e "\033[38;5;196m●\033[0m $(t ddev_stopped)"
                 ;;
             *)
-                echo -e "\033[38;5;245m●\033[0m DDEV status unknown"
+                echo -e "\033[38;5;245m●\033[0m $(t ddev_status_unknown)"
                 ;;
         esac
     else
-        echo -e "\033[38;5;245mNot a DDEV project\033[0m"
+        echo -e "\033[38;5;245m$(t not_ddev_project)\033[0m"
     fi
 }
 
@@ -45,7 +45,7 @@ dd.ni() {
     
     if is_ddev_project; then
         echo -e "\033[38;5;39m$DDEV_ART\033[0m"
-        echo -e "  \033[38;5;39m🐳 Running npm install inside DDEV container\033[0m"
+        echo -e "  \033[38;5;39m🐳 $(t ddev_npm_install)\033[0m"
         echo ""
         
         local frames=("📦    " "📦📦   " "📦📦📦  " "📦📦📦📦 " "📦📦📦📦📦")
@@ -55,7 +55,7 @@ dd.ni() {
         local i=0
         
         while kill -0 $pid 2>/dev/null; do
-            printf "\r  %s Installing packages..." "${frames[$((i % 5))]}"
+            printf "\r  %s $(t installing)..." "${frames[$((i % 5))]}"
             sleep 0.2
             ((i++))
         done
@@ -64,9 +64,9 @@ dd.ni() {
         local exit_code=$?
         
         if [[ $exit_code -eq 0 ]]; then
-            echo -e "\r  \033[38;5;46m✓ DDEV npm install complete!\033[0m 🐳✨\033[K"
+            echo -e "\r  \033[38;5;46m✓ $(t ddev_install_complete)\033[0m 🐳✨\033[K"
         else
-            echo -e "\r  \033[38;5;196m✗ DDEV npm install failed\033[0m\033[K"
+            echo -e "\r  \033[38;5;196m✗ $(t ddev_install_failed)\033[0m\033[K"
         fi
     else
         # Fall back to regular npm install
@@ -80,7 +80,7 @@ dd.pi() {
     
     if is_ddev_project; then
         echo -e "\033[38;5;208m$DDEV_ART\033[0m"
-        echo -e "  \033[38;5;208m🐳 Running pnpm install inside DDEV container\033[0m"
+        echo -e "  \033[38;5;208m🐳 $(t ddev_pnpm_install)\033[0m"
         echo ""
         
         local frames=("⠋" "⠙" "⠹" "⠸" "⠼" "⠴" "⠦" "⠧" "⠇" "⠏")
@@ -90,7 +90,7 @@ dd.pi() {
         local i=0
         
         while kill -0 $pid 2>/dev/null; do
-            printf "\r  \033[38;5;208m%s\033[0m Installing packages..." "${frames[$((i % 10))]}"
+            printf "\r  \033[38;5;208m%s\033[0m $(t installing)..." "${frames[$((i % 10))]}"
             sleep 0.1
             ((i++))
         done
@@ -99,9 +99,9 @@ dd.pi() {
         local exit_code=$?
         
         if [[ $exit_code -eq 0 ]]; then
-            echo -e "\r  \033[38;5;46m✓ DDEV pnpm install complete!\033[0m 🐳✨\033[K"
+            echo -e "\r  \033[38;5;46m✓ $(t ddev_install_complete)\033[0m 🐳✨\033[K"
         else
-            echo -e "\r  \033[38;5;196m✗ DDEV pnpm install failed\033[0m\033[K"
+            echo -e "\r  \033[38;5;196m✗ $(t ddev_install_failed)\033[0m\033[K"
         fi
     else
         # Fall back to regular pnpm install
@@ -112,7 +112,7 @@ dd.pi() {
 # DDEV dev server
 dd.pd() {
     if ! is_ddev_project; then
-        echo -e "  \033[38;5;196m✗ Not in a DDEV project\033[0m"
+        echo -e "  \033[38;5;196m✗ $(t not_ddev_project)"
         return 1
     fi
     
@@ -126,7 +126,7 @@ dd.pd() {
     done
     echo ""
     
-    echo -e "  \033[38;5;46m▶ Starting DDEV dev server...\033[0m"
+    echo -e "  \033[38;5;46m▶ $(t ddev_starting_server)\033[0m"
     echo ""
     
     # Check for package manager preference
@@ -142,12 +142,12 @@ dd.pd() {
 # DDEV build
 dd.pb() {
     if ! is_ddev_project; then
-        echo -e "  \033[38;5;196m✗ Not in a DDEV project\033[0m"
+        echo -e "  \033[38;5;196m✗ $(t not_ddev_project)"
         return 1
     fi
     
     echo -e "\033[38;5;226m$DDEV_ART\033[0m"
-    echo -e "  \033[38;5;226m🔨 Building inside DDEV container...\033[0m"
+    echo -e "  \033[38;5;226m🔨 $(t ddev_building)\033[0m"
     echo ""
     
     local start_time=$(date +%s)
@@ -164,20 +164,20 @@ dd.pb() {
     local total_time=$(($(date +%s) - start_time))
     
     if [[ $exit_code -eq 0 ]]; then
-        echo -e "\n  \033[38;5;46m✓ DDEV build complete!\033[0m (${total_time}s) 🐳"
+        echo -e "\n  \033[38;5;46m✓ $(t ddev_build_complete)\033[0m (${total_time}s) 🐳"
     fi
 }
 
 # DDEV scripts list
 dd.ps-list() {
     if ! is_ddev_project; then
-        echo -e "  \033[38;5;196m✗ Not in a DDEV project\033[0m"
+        echo -e "  \033[38;5;196m✗ $(t not_ddev_project)"
         return 1
     fi
     
     echo ""
     echo -e "  \033[38;5;51m╭───────────────────────────────────────╮\033[0m"
-    echo -e "  \033[38;5;51m│\033[0m      \033[1m🐳 DDEV Available Scripts\033[0m         \033[38;5;51m│\033[0m"
+    echo -e "  \033[38;5;51m│\033[0m      \033[1m🐳 $(t ddev_available_scripts)\033[0m         \033[38;5;51m│\033[0m"
     echo -e "  \033[38;5;51m╰───────────────────────────────────────╯\033[0m"
     echo ""
     
@@ -186,7 +186,7 @@ dd.ps-list() {
 
 # DDEV start
 dd.start() {
-    echo -e "\n  \033[38;5;39m🐳 Starting DDEV...\033[0m"
+    echo -e "\n  \033[38;5;39m🐳 $(t ddev_starting)\033[0m"
     
     local frames=("◐" "◓" "◑" "◒")
     ddev start 2>&1 &
@@ -194,7 +194,7 @@ dd.start() {
     local i=0
     
     while kill -0 $pid 2>/dev/null; do
-        printf "\r  \033[38;5;39m%s\033[0m Starting containers..." "${frames[$((i % 4))]}"
+        printf "\r  \033[38;5;39m%s\033[0m $(t ddev_starting_containers)" "${frames[$((i % 4))]}"
         sleep 0.2
         ((i++))
     done
@@ -203,18 +203,18 @@ dd.start() {
     local exit_code=$?
     
     if [[ $exit_code -eq 0 ]]; then
-        echo -e "\r  \033[38;5;46m✓ DDEV started!\033[0m 🐳\033[K"
+        echo -e "\r  \033[38;5;46m✓ $(t ddev_started)\033[0m 🐳\033[K"
         echo ""
         ddev describe 2>/dev/null | grep -E "(URL|mailhog)" | head -5
     else
-        echo -e "\r  \033[38;5;196m✗ DDEV start failed\033[0m\033[K"
+        echo -e "\r  \033[38;5;196m✗ $(t ddev_start_failed)\033[0m\033[K"
     fi
     echo ""
 }
 
 # DDEV stop
 dd.stop() {
-    echo -e "\n  \033[38;5;208m🐳 Stopping DDEV...\033[0m"
+    echo -e "\n  \033[38;5;208m🐳 $(t ddev_stopping)\033[0m"
     
     local frames=("◐" "◓" "◑" "◒")
     ddev stop 2>&1 &
@@ -222,46 +222,46 @@ dd.stop() {
     local i=0
     
     while kill -0 $pid 2>/dev/null; do
-        printf "\r  \033[38;5;208m%s\033[0m Stopping containers..." "${frames[$((i % 4))]}"
+        printf "\r  \033[38;5;208m%s\033[0m $(t ddev_stopping_containers)" "${frames[$((i % 4))]}"
         sleep 0.2
         ((i++))
     done
     
     wait $pid
-    echo -e "\r  \033[38;5;46m✓ DDEV stopped!\033[0m\033[K"
+    echo -e "\r  \033[38;5;46m✓ $(t ddev_stopped_msg)\033[0m\033[K"
     echo ""
 }
 
 # DDEV restart
 dd.restart() {
-    echo -e "\n  \033[38;5;226m🐳 Restarting DDEV...\033[0m"
+    echo -e "\n  \033[38;5;226m🐳 $(t ddev_restarting)\033[0m"
     ddev restart
-    echo -e "  \033[38;5;46m✓ DDEV restarted!\033[0m 🐳"
+    echo -e "  \033[38;5;46m✓ $(t ddev_restarted)\033[0m 🐳"
     echo ""
 }
 
 # DDEV SSH with style
 dd.ssh() {
-    echo -e "\n  \033[38;5;51m🐳 Connecting to DDEV container...\033[0m\n"
+    echo -e "\n  \033[38;5;51m🐳 $(t ddev_connecting)\033[0m\n"
     ddev ssh
 }
 
 # DDEV logs with style  
 dd.logs() {
-    echo -e "\n  \033[38;5;51m🐳 DDEV Logs\033[0m\n"
+    echo -e "\n  \033[38;5;51m🐳 $(t ddev_logs)\033[0m\n"
     ddev logs -f
 }
 
 # DDEV describe with better formatting
 dd.describe() {
     if ! is_ddev_project; then
-        echo -e "  \033[38;5;196m✗ Not in a DDEV project\033[0m"
+        echo -e "  \033[38;5;196m✗ $(t not_ddev_project)"
         return 1
     fi
     
     echo ""
     echo -e "  \033[38;5;51m╭───────────────────────────────────────╮\033[0m"
-    echo -e "  \033[38;5;51m│\033[0m         \033[1m🐳 DDEV Project Info\033[0m           \033[38;5;51m│\033[0m"
+    echo -e "  \033[38;5;51m│\033[0m         \033[1m🐳 $(t ddev_project_info)\033[0m           \033[38;5;51m│\033[0m"
     echo -e "  \033[38;5;51m╰───────────────────────────────────────╯\033[0m"
     echo ""
     ddev describe
@@ -270,29 +270,29 @@ dd.describe() {
 # DDEV composer
 dd.comp() {
     if ! is_ddev_project; then
-        echo -e "  \033[38;5;196m✗ Not in a DDEV project\033[0m"
+        echo -e "  \033[38;5;196m✗ $(t not_ddev_project)"
         return 1
     fi
     
-    echo -e "\n  \033[38;5;141m🎼 Running composer inside DDEV...\033[0m\n"
+    echo -e "\n  \033[38;5;141m🎼 $(t ddev_composer)\033[0m\n"
     ddev composer "$@"
 }
 
 # DDEV sequelace
 dd.seq() {
     if ! is_ddev_project; then
-        echo -e "  \033[38;5;196m✗ Not in a DDEV project\033[0m"
+        echo -e "  \033[38;5;196m✗ $(t not_ddev_project)"
         return 1
     fi
     
-    echo -e "\n  \033[38;5;33m🗄️ Opening sequelace...\033[0m\n"
+    echo -e "\n  \033[38;5;33m🗄️ $(t ddev_sequelace)\033[0m\n"
     ddev sequelace
 }
 
 # DDEV Console
 dd.c() {
     if ! is_ddev_project; then
-        echo -e "  \033[38;5;196m✗ Not in a DDEV project\033[0m"
+        echo -e "  \033[38;5;196m✗ $(t not_ddev_project)"
         return 1
     fi
     ddev console "$@"
@@ -301,30 +301,30 @@ dd.c() {
 # DDEV Console Cache Clear
 dd.cc() {
     if ! is_ddev_project; then
-        echo -e "  \033[38;5;196m✗ Not in a DDEV project\033[0m"
+        echo -e "  \033[38;5;196m✗ $(t not_ddev_project)"
         return 1
     fi
-    echo -e "  \033[38;5;46m🧹 Clearing Symfony cache...\033[0m"
+    echo -e "  \033[38;5;46m🧹 $(t ddev_clearing_cache)\033[0m"
     ddev console cache:clear "$@"
 }
 
 # Fuzzy DDEV project selector (if multiple projects)
 fddev() {
     if ! command -v fzf &>/dev/null; then
-        echo -e "  \033[38;5;196m✗ fzf required for this command\033[0m"
+        echo -e "  \033[38;5;196m✗ $(t fzf_required)"
         return 1
     fi
     
     local project
     project=$(ddev list -j 2>/dev/null | grep -o '"name":"[^"]*"' | cut -d'"' -f4 | 
-        fzf --header='  🐳 Select DDEV Project' \
+        fzf --header="  🐳 $(t ddev_select_project)" \
             --preview 'ddev describe {} 2>/dev/null')
     
     if [[ -n "$project" ]]; then
         local project_dir=$(ddev describe "$project" -j 2>/dev/null | grep -o '"approot":"[^"]*"' | cut -d'"' -f4)
         if [[ -n "$project_dir" && -d "$project_dir" ]]; then
             cd "$project_dir"
-            echo -e "  \033[38;5;46m✓ Switched to:\033[0m $project"
+            echo -e "  \033[38;5;46m✓ $(t switched_to):\033[0m $project"
         fi
     fi
 }
@@ -333,7 +333,7 @@ fddev() {
 dd.list() {
     echo ""
     echo -e "  \033[38;5;51m╭───────────────────────────────────────╮\033[0m"
-    echo -e "  \033[38;5;51m│\033[0m          \033[1m🐳 DDEV Projects\033[0m              \033[38;5;51m│\033[0m"
+    echo -e "  \033[38;5;51m│\033[0m          \033[1m🐳 $(t ddev_projects)\033[0m              \033[38;5;51m│\033[0m"
     echo -e "  \033[38;5;51m╰───────────────────────────────────────╯\033[0m"
     echo ""
     ddev list
@@ -369,3 +369,5 @@ dd() {
 # ─────────────────────────────────────────────────────────────────
 # DDEV alias for ddev
 alias dd.="ddev"
+alias dstart="dd.start"
+alias dinfo="dd.describe"

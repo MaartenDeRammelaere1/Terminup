@@ -220,6 +220,7 @@ Use `tup` to see all commands, or `tup <category>` for specific categories.
 | `tup git` | Git commands |
 | `tup nav` | Navigation commands |
 | `tup npm` | NPM/PNPM commands |
+| `tup ddev` | DDEV commands |
 | `tup screen` | Screensaver commands |
 | `tup system` | System & language commands |
 | `tups` | Reload shell |
@@ -262,6 +263,21 @@ Use `tup` to see all commands, or `tup <category>` for specific categories.
 | `fscript` | Fuzzy script picker |
 | `add <pkg>` | Add dependency |
 | `remove <pkg>` | Remove dependency |
+
+### DDEV
+
+| Command | Description |
+|---------|-------------|
+| `dd start`/`stop` | Start/Stop DDEV |
+| `dd restart` | Restart DDEV |
+| `dd ssh` | SSH into container |
+| `dd describe` | Project info |
+| `dd ni`/`pi` | DDEV npm/pnpm install |
+| `dd pd` | DDEV dev server |
+| `dd c` | DDEV console |
+| `dd cc` | DDEV cache clear |
+| `fddev` | Fuzzy DDEV project selector |
+| `dd list` | List all DDEV projects |
 
 ### Screensavers & Lock
 

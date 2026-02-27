@@ -232,6 +232,7 @@ terminup() {
             echo -e "    \033[38;5;208mdev\033[0m/\033[38;5;208mbuild\033[0m   Dev server/Build"
             echo -e "    \033[38;5;177mff\033[0m          Fuzzy file finder"
             echo -e "    \033[38;5;87mlock\033[0m        Lock screen"
+            echo -e "    \033[38;5;39mdd\033[0m          DDEV commands"
             echo -e "    \033[38;5;141mstats\033[0m       System stats"
             echo ""
             echo -e "  \033[38;5;245m─────────────────────────────────────────────\033[0m"
@@ -316,7 +317,7 @@ terminup() {
             ;;
         *)
             echo -e "  \033[38;5;196m✗\033[0m Unknown: $cmd"
-            echo -e "  \033[38;5;245mTry: tup [git|nav|npm|extras|tools|workflow|fun|screen|all]\033[0m"
+            echo -e "  \033[38;5;245mTry: tup [git|nav|npm|ddev|extras|tools|workflow|fun|screen|all]\033[0m"
             ;;
     esac
 }

@@ -159,6 +159,39 @@ _T_en=(
     focus_active "Focus Mode Active"
     stay_focused "Stay focused! No distractions"
     
+    # DDEV
+    ddev_running "DDEV running"
+    ddev_stopped "DDEV stopped"
+    ddev_status_unknown "DDEV status unknown"
+    not_ddev_project "Not a DDEV project"
+    ddev_npm_install "Running npm install inside DDEV container"
+    ddev_pnpm_install "Running pnpm install inside DDEV container"
+    ddev_install_complete "DDEV install complete!"
+    ddev_install_failed "DDEV install failed"
+    ddev_starting_server "Starting DDEV dev server..."
+    ddev_building "Building inside DDEV container..."
+    ddev_build_complete "DDEV build complete!"
+    ddev_available_scripts "DDEV Available Scripts"
+    ddev_starting "Starting DDEV..."
+    ddev_starting_containers "Starting containers..."
+    ddev_started "DDEV started!"
+    ddev_start_failed "DDEV start failed"
+    ddev_stopping "Stopping DDEV..."
+    ddev_stopping_containers "Stopping containers..."
+    ddev_stopped_msg "DDEV stopped!"
+    ddev_restarting "Restarting DDEV..."
+    ddev_restarted "DDEV restarted!"
+    ddev_connecting "Connecting to DDEV container..."
+    ddev_logs "DDEV Logs"
+    ddev_project_info "DDEV Project Info"
+    ddev_composer "Running composer inside DDEV..."
+    ddev_sequelace "Opening sequelace..."
+    ddev_clearing_cache "Clearing Symfony cache..."
+    fzf_required "fzf required for this command"
+    ddev_select_project "Select DDEV Project"
+    switched_to "Switched to"
+    ddev_projects "DDEV Projects"
+
     # System
     shell_reloaded "Shell reloaded"
     config_saved "Configuration saved"
@@ -281,6 +314,39 @@ _T_nl=(
     focus_active "Focus Modus Actief"
     stay_focused "Blijf gefocust! Geen afleidingen"
     
+    # DDEV
+    ddev_running "DDEV actief"
+    ddev_stopped "DDEV gestopt"
+    ddev_status_unknown "DDEV status onbekend"
+    not_ddev_project "Geen DDEV project"
+    ddev_npm_install "npm install uitvoeren in DDEV container"
+    ddev_pnpm_install "pnpm install uitvoeren in DDEV container"
+    ddev_install_complete "DDEV installatie voltooid!"
+    ddev_install_failed "DDEV installatie mislukt"
+    ddev_starting_server "DDEV dev server starten..."
+    ddev_building "Bouwen in DDEV container..."
+    ddev_build_complete "DDEV build voltooid!"
+    ddev_available_scripts "DDEV Beschikbare Scripts"
+    ddev_starting "DDEV starten..."
+    ddev_starting_containers "Containers starten..."
+    ddev_started "DDEV gestart!"
+    ddev_start_failed "DDEV start mislukt"
+    ddev_stopping "DDEV stoppen..."
+    ddev_stopping_containers "Containers stoppen..."
+    ddev_stopped_msg "DDEV gestopt!"
+    ddev_restarting "DDEV herstarten..."
+    ddev_restarted "DDEV herstart!"
+    ddev_connecting "Verbinden met DDEV container..."
+    ddev_logs "DDEV Logs"
+    ddev_project_info "DDEV Project Informatie"
+    ddev_composer "Composer uitvoeren in DDEV..."
+    ddev_sequelace "Sequelace openen..."
+    ddev_clearing_cache "Symfony cache legen..."
+    fzf_required "fzf is vereist voor dit commando"
+    ddev_select_project "Selecteer DDEV Project"
+    switched_to "Gewijzigd naar"
+    ddev_projects "DDEV Projecten"
+
     shell_reloaded "Shell herladen"
     config_saved "Configuratie opgeslagen"
     language_changed "Taal gewijzigd naar"
@@ -654,6 +720,12 @@ _T_es=(
 # ─────────────────────────────────────────────────────────────────
 
 # Get translated string
+# Usage: t "key" or t "key" "fallback"
+t() {
+    _t "$@"
+}
+
+# Get translated string (original function)
 # Usage: _t "key" or _t "key" "fallback"
 _t() {
     local key="$1"
