@@ -78,7 +78,7 @@ _terminup_load_component() {
             _terminup_lazy_load "npm-pnpm" ni pi dev build test scripts fscript add add-dev remove outdated
             ;;
         ddev)
-            _terminup_lazy_load "ddev" dni dpi ddev-dev ddev-build dstart dstop drestart dssh dlogs dinfo dcomposer dartisan dmysql fddev dlist is_ddev_project ddev_status
+            _terminup_lazy_load "ddev" dd dni dpi ddev-dev ddev-build dstart dstop drestart dssh dlogs dinfo dcomposer dartisan dmysql fddev dlist is_ddev_project ddev_status
             ;;
         fzf)
             _terminup_lazy_load "fzf-power" ff fbr flog fkill fdocker
